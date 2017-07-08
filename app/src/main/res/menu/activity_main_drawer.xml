@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="@string/processo">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_plus"
+                    android:icon="@drawable/ic_menu_file_multiple"
+                    android:title="@string/novo" />
+                <item
+                    android:id="@+id/nav_search"
+                    android:icon="@drawable/ic_menu_alert"
+                    android:title="@string/pendencia" />
+                <item
+                    android:id="@+id/nav_radar"
+                    android:icon="@drawable/ic_menu_wifi"
+                    android:title="@string/radar_cpf_cnpj" />
+                <item
+                    android:id="@+id/nav_simulator"
+                    android:icon="@drawable/ic_menu_data_usage"
+                    android:title="@string/simulador" />
+                <item
+                    android:id="@+id/nav_data"
+                    android:icon="@drawable/ic_menu_person"
+                    android:title="@string/meus_dados" />
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="@string/applicativo">
+        <menu>
+            <group android:checkableBehavior="single">
+                <item
+                    android:id="@+id/nav_info"
+                    android:icon="@drawable/ic_menu_info"
+                    android:title="@string/sobre" />
+                <item
+                    android:id="@+id/nav_termo"
+                    android:icon="@drawable/ic_menu_file"
+                    android:title="@string/termo_uso" />
+                <item
+                    android:id="@+id/nav_power"
+                    android:icon="@drawable/ic_menu_power"
+                    android:title="@string/sair" />
+            </group>
+        </menu>
+    </item>
+
+</menu>
