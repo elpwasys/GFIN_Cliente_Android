@@ -27,15 +27,24 @@ public class ProcessoModel extends Model {
     public ArrayList<UploadModel> uploads;
     public ArrayList<CampoGrupoModel> gruposCampos;
 
-    public enum Coleta {
-        AGUARDANDO_COLETA (R.string.coleta_status_aguardando_coleta, R.drawable.coleta_status_aguardando_coleta),
-        COLETADO (R.string.coleta_status_coletado, R.drawable.coleta_status_coletado),
-        ARMAZENADO (R.string.coleta_status_armazenado, R.drawable.coleta_status_armazenado);
+    public enum Coleta implements AppSpinner.Option {
+        AGUARDANDO_COLETA (R.string.coleta_status_aguardando_coleta, R.drawable.ic_bike),
+        COLETADO (R.string.coleta_status_coletado, R.drawable.ic_folder),
+        ARMAZENADO (R.string.coleta_status_armazenado, R.drawable.ic_database);
         public int stringRes;
         public int drawableRes;
         Coleta(@StringRes int stringRes, @DrawableRes int drawableRes) {
             this.stringRes = stringRes;
             this.drawableRes = drawableRes;
+        }
+        @Override
+        public String getValue() {
+            return name();
+        }
+        @Override
+        public String getLabel() {
+            Context context = Application.getContext();
+            return context.getString(stringRes);
         }
     }
 

@@ -7,26 +7,30 @@ import android.support.v4.content.ContextCompat;
 
 import org.apache.commons.lang3.ArrayUtils;
 
+import java.util.ArrayList;
+
 /**
  * Created by pascke on 05/09/16.
  */
 public class Permission {
 
-    public static final String[] SCAN = merge(Permission.STORAGE, Manifest.permission.CAMERA);
+    public static final String[] SCAN;
+    public static final String[] PHONE;
+    public static final String[] STORAGE;
+    public static final String[] LOCATION;
 
-    public static final String[] PHONE = {
-            Manifest.permission.READ_PHONE_STATE
-    };
-
-    public static final String[] STORAGE = {
-            Manifest.permission.READ_EXTERNAL_STORAGE,
-            Manifest.permission.WRITE_EXTERNAL_STORAGE
-    };
-
-    public static final String[] LOCATION = {
-            Manifest.permission.ACCESS_COARSE_LOCATION,
-            Manifest.permission.ACCESS_FINE_LOCATION
-    };
+    static  {
+        PHONE = new String[] { Manifest.permission.READ_PHONE_STATE };
+        STORAGE = new String[] {
+                Manifest.permission.READ_EXTERNAL_STORAGE,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+        };
+        LOCATION = new String[] {
+                Manifest.permission.ACCESS_COARSE_LOCATION,
+                Manifest.permission.ACCESS_FINE_LOCATION
+        };
+        SCAN = merge(Permission.STORAGE, Manifest.permission.CAMERA);
+    }
 
     public static String[] merge(String[] permitions, String... permition) {
         return ArrayUtils.addAll(permitions, permition);
@@ -46,7 +50,6 @@ public class Permission {
 
     public static boolean isScanGranted() {
         Context context = Application.getContext();
-        String[] permissions = Permission.merge(Permission.STORAGE, Manifest.permission.CAMERA);
         for (String permission : SCAN) {
             if (ContextCompat.checkSelfPermission(context, permission) != PackageManager.PERMISSION_GRANTED) {
                 return false;

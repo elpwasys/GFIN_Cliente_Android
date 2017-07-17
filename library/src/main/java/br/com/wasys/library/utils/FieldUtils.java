@@ -63,6 +63,15 @@ public class FieldUtils {
         setText((TextView) editText, value);
     }
 
+    public static void setText(TextView textView, Date value, String pattern) {
+        if (value == null) {
+            textView.setText(null);
+        }
+        else {
+            textView.setText(DateUtils.format((Date) value, pattern));
+        }
+    }
+
     public static void setText(TextView textView, Date value, DateUtils.DateType dateType) {
         if (value == null) {
             textView.setText(null);

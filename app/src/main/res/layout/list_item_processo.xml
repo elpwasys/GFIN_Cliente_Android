@@ -8,7 +8,7 @@
 
     <ImageView
         android:id="@+id/image_view_status"
-        android:layout_width="50dp"
+        android:layout_width="40dp"
         android:layout_height="40dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -24,7 +24,7 @@
 
     <TextView
         android:id="@+id/text_view_id"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginRight="8dp"
@@ -33,19 +33,43 @@
         android:textAppearance="@android:style/TextAppearance.Small"
         app:layout_constraintLeft_toRightOf="@+id/image_view_status"
         app:layout_constraintRight_toLeftOf="@+id/text_view_data"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginStart="@dimen/default_margin"
+        android:layout_marginEnd="8dp" />
 
     <TextView
         android:id="@+id/text_view_status"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/default_margin"
         android:layout_marginTop="6dp"
         android:textAppearance="@android:style/TextAppearance.Small"
-        android:textColor="@color/grey_500"
+        android:textColor="@android:color/black"
         app:layout_constraintLeft_toRightOf="@+id/image_view_status"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_view_id" />
+        app:layout_constraintTop_toBottomOf="@+id/text_view_id"
+        android:layout_marginStart="@dimen/default_margin" />
+
+    <TextView
+        android:id="@+id/text_view_coleta"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="56dp"
+        android:layout_marginTop="6dp"
+        android:textAppearance="@android:style/TextAppearance.Small"
+        android:textColor="@color/grey_500"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_view_status" />
+
+    <ImageView
+        android:id="@+id/image_view_coleta"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="8dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_view_status" />
 
 
 </android.support.constraint.ConstraintLayout>

@@ -39,6 +39,9 @@
     <string name="valor_cheque">Valor do cheque</string>
     <string name="valor_receber">Valor a receber</string>
     <string name="numero_dias">Nº de dias</string>
+    <string name="numero">Número</string>
+    <string name="periodo_de">Período de</string>
+    <string name="periodo_ate">Período até</string>
     <string name="network_not_available">Internet indisponível</string>>
     <string name="sim">Sim</string>
     <string name="nao">Não</string>
@@ -86,5 +89,12 @@
 
     <string name="msg_pesquisa_sem_resulta">Você ainda não possui cheques para troca.\n<b>Clique aqui</b> para cadastrar.</string>
     <string name="pesquisa">Pesquisa</string>
+    <string name="filtrar">Filtrar</string>
+    <string name="status_processo">Status do processo</string>
+    <string name="limpar">Limpar</string>
+    <string name="coleta_processo">Status da coleta</string>
+    <string name="atualizar">Atualizar</string>
+    <string name="ontem">Ontem</string>
+    <string name="anteontem">Anteontem</string>
 
 </resources>

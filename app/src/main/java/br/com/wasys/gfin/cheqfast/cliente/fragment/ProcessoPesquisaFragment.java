@@ -6,7 +6,11 @@ import android.support.annotation.Nullable;
 import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentManager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,6 +23,7 @@ import java.util.List;
 
 import br.com.wasys.gfin.cheqfast.cliente.R;
 import br.com.wasys.gfin.cheqfast.cliente.adapter.ProcessoAdapter;
+import br.com.wasys.gfin.cheqfast.cliente.dialog.FiltroDialog;
 import br.com.wasys.gfin.cheqfast.cliente.model.FiltroModel;
 import br.com.wasys.gfin.cheqfast.cliente.model.PesquisaModel;
 import br.com.wasys.gfin.cheqfast.cliente.model.ProcessoModel;
@@ -36,7 +41,7 @@ import rx.Subscriber;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProcessoPesquisaFragment extends CheqFastFragment implements AdapterView.OnItemClickListener, PagingBarLayout.Callback {
+public class ProcessoPesquisaFragment extends CheqFastFragment implements AdapterView.OnItemClickListener, PagingBarLayout.Callback, FiltroDialog.FiltroDialogListener {
 
     @BindView(R.id.textview) TextView mTextView;
     @BindView(R.id.listview) ListView mListView;
@@ -91,6 +96,25 @@ public class ProcessoPesquisaFragment extends CheqFastFragment implements Adapte
     }
 
     @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.fragment_processo_pesquisa, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int itemId = item.getItemId();
+        switch (itemId) {
+            case R.id.action_refresh:
+                startAsyncFiltrar();
+                return true;
+            case R.id.action_search:
+                onOpenSearchClick();
+                return true;
+        }
+        return false;
+    }
+
+    @Override
     public void onResume() {
         super.onResume();
         startAsyncFiltrar();
@@ -113,6 +137,13 @@ public class ProcessoPesquisaFragment extends CheqFastFragment implements Adapte
     @Override
     public void onPreviousClick(int page) {
         mPesquisaModel.page = page;
+        startAsyncFiltrar();
+    }
+
+    @Override
+    public void onFiltrar(FiltroModel filtroModel) {
+        mPesquisaModel.page = 0;
+        mPesquisaModel.filtro = filtroModel;
         startAsyncFiltrar();
     }
 
@@ -147,6 +178,16 @@ public class ProcessoPesquisaFragment extends CheqFastFragment implements Adapte
             mTextView.setVisibility(View.VISIBLE);
             mConstraintLayout.setVisibility(View.GONE);
         }
+    }
+
+    private void onOpenSearchClick() {
+        FiltroDialog dialog = FiltroDialog.newInstance(mPesquisaModel.filtro);
+        dialog.setListener(this);
+        if (mStatus != null) {
+            dialog.setStatusVisibility(View.GONE);
+        }
+        FragmentManager manager = getFragmentManager();
+        dialog.show(manager,  dialog.getClass().getSimpleName());
     }
 
     // ASYNC COMPLETED METHOD

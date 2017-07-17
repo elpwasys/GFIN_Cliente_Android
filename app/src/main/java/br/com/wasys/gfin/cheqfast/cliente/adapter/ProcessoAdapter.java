@@ -6,11 +6,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.Date;
 import java.util.List;
 
 import br.com.wasys.gfin.cheqfast.cliente.R;
 import br.com.wasys.gfin.cheqfast.cliente.model.ProcessoModel;
 import br.com.wasys.library.adapter.ListAdapter;
+import br.com.wasys.library.utils.DateUtils;
 import br.com.wasys.library.utils.FieldUtils;
 
 /**
@@ -34,21 +36,48 @@ public class ProcessoAdapter extends ListAdapter<ProcessoModel> {
             holder.idTextView = (TextView) view.findViewById(R.id.text_view_id);
             holder.dataTextView = (TextView) view.findViewById(R.id.text_view_data);
             holder.statusTextView = (TextView) view.findViewById(R.id.text_view_status);
+            holder.coletaTextView = (TextView) view.findViewById(R.id.text_view_coleta);
             holder.statusImageView = (ImageView) view.findViewById(R.id.image_view_status);
+            holder.coletaImageView = (ImageView) view.findViewById(R.id.image_view_coleta);
             view.setTag(holder);
         }
         ProcessoModel processo = mRows.get(position);
+
+        FieldUtils.setText(holder.idTextView, processo.id);
+
         holder.statusTextView.setText(processo.status.stringRes);
         holder.statusImageView.setImageResource(processo.status.drawableRes);
-        FieldUtils.setText(holder.idTextView, processo.id);
-        FieldUtils.setText(holder.dataTextView, processo.dataCriacao);
+
+        holder.coletaTextView.setText(null);
+        holder.coletaImageView.setImageBitmap(null);
+        if (processo.coleta != null) {
+            holder.coletaTextView.setText(processo.coleta.stringRes);
+            holder.coletaImageView.setImageResource(processo.coleta.drawableRes);
+        }
+
+        Date today = DateUtils.truncate(new Date());
+        Date dataCriacao = DateUtils.truncate(processo.dataCriacao);
+
+        Context context = view.getContext();
+        if (today.equals(dataCriacao)) {
+            FieldUtils.setText(holder.dataTextView, DateUtils.format(processo.dataCriacao, "HH:mm"));
+        } else if (DateUtils.getDaysBetween(today, dataCriacao) == 1) {
+            FieldUtils.setText(holder.dataTextView, context.getString(R.string.ontem));
+        } /*else if (DateUtils.getDaysBetween(today, dataCriacao) == 2) {
+            FieldUtils.setText(holder.dataTextView, context.getString(R.string.anteontem));
+        }*/ else {
+            FieldUtils.setText(holder.dataTextView, DateUtils.format(processo.dataCriacao, "dd/MM/yy"));
+        }
+
         return view;
     }
 
     static class ViewHolder {
-        ImageView statusImageView;
         TextView idTextView;
         TextView dataTextView;
         TextView statusTextView;
+        TextView coletaTextView;
+        ImageView statusImageView;
+        ImageView coletaImageView;
     }
 }

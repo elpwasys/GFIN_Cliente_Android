@@ -8,4 +8,5 @@ public class FiltroModel {
 	public Date dataInicio;
 	public Date dataTermino;
 	public ProcessoModel.Status status;
+	public ProcessoModel.Coleta coleta;
 }
