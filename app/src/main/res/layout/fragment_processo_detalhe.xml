@@ -1,0 +1,167 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".fragment.ProcessoDetalheFragment">
+
+    <FrameLayout
+        android:id="@+id/layout_top"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_caption">
+
+        <ImageView
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="left|center_vertical"
+            android:layout_margin="@dimen/activity_margin"
+            android:src="@drawable/processo_status_cancelado" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/activity_margin"
+            android:text="001578"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textColor="@color/colorPrimary"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:layout_gravity="top|center_horizontal"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/activity_margin"
+            android:text="Aguardando alguma coisa"
+            android:textAppearance="@android:style/TextAppearance.Small"
+            android:textColor="@color/grey_800"
+            android:gravity="center"
+            android:layout_gravity="bottom|center_horizontal"/>
+
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_caption">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_margin"
+                    android:text="@string/data_hora"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/grey_600" />
+
+                <TextView
+                    android:id="@+id/text_data"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_margin"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:layout_marginBottom="@dimen/activity_margin"
+                    android:text="17/04/1980 17:15"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/grey_400" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_caption">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_margin"
+                    android:text="@string/coleta_processo"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/grey_600" />
+
+                <TextView
+                    android:id="@+id/text_coleta"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_margin"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:layout_marginBottom="@dimen/activity_margin"
+                    android:text="17/04/1980 17:15"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/grey_400" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_caption">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_margin"
+                    android:text="@string/taxa"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/grey_600" />
+
+                <TextView
+                    android:id="@+id/text_taxa"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_margin"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:layout_marginBottom="@dimen/activity_margin"
+                    android:text="17/04/1980 17:15"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/grey_400" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/bg_caption">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/activity_margin"
+                    android:text="@string/valor_liberado"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/grey_600" />
+
+                <TextView
+                    android:id="@+id/text_valor_liberado"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/activity_margin"
+                    android:layout_marginRight="@dimen/activity_margin"
+                    android:layout_marginBottom="@dimen/activity_margin"
+                    android:text="17/04/1980 17:15"
+                    android:textAppearance="@android:style/TextAppearance.Small"
+                    android:textColor="@color/grey_400" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

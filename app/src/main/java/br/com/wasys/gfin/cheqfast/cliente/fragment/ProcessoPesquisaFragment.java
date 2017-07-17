@@ -13,6 +13,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -149,7 +150,10 @@ public class ProcessoPesquisaFragment extends CheqFastFragment implements Adapte
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+        Adapter adapter = parent.getAdapter();
+        ProcessoModel processo = (ProcessoModel) adapter.getItem(position);
+        ProcessoDetalheFragment fragment = ProcessoDetalheFragment.newInstance(processo.id);
+        FragmentUtils.replace(getActivity(), R.id.content_main, fragment, fragment.getClass().getSimpleName());
     }
 
     private void prepare() {

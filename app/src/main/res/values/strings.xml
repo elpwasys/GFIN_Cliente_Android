@@ -96,5 +96,8 @@
     <string name="atualizar">Atualizar</string>
     <string name="ontem">Ontem</string>
     <string name="anteontem">Anteontem</string>
+    <string name="data_hora">Data / hora</string>
+    <string name="taxa">Taxa</string>
+    <string name="valor_liberado">Valor liberado</string>
 
 </resources>

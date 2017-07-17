@@ -7,10 +7,12 @@ import org.apache.commons.collections4.CollectionUtils;
 import java.util.List;
 
 import br.com.wasys.gfin.cheqfast.cliente.Application;
+import br.com.wasys.gfin.cheqfast.cliente.dataset.DataSet;
 import br.com.wasys.gfin.cheqfast.cliente.endpoint.Endpoint;
 import br.com.wasys.gfin.cheqfast.cliente.endpoint.ProcessoEndpoint;
 import br.com.wasys.gfin.cheqfast.cliente.model.DigitalizacaoModel;
 import br.com.wasys.gfin.cheqfast.cliente.model.ProcessoModel;
+import br.com.wasys.gfin.cheqfast.cliente.model.ProcessoRegraModel;
 import br.com.wasys.gfin.cheqfast.cliente.model.UploadModel;
 import br.com.wasys.library.service.Service;
 import retrofit2.Call;
@@ -29,6 +31,13 @@ public class ProcessoService extends Service {
         Call<ProcessoModel> call = endpoint.criar();
         ProcessoModel model = Endpoint.execute(call);
         return model;
+    }
+
+    public static DataSet<ProcessoModel, ProcessoRegraModel> editar(Long id) throws Throwable {
+        ProcessoEndpoint endpoint = Endpoint.create(ProcessoEndpoint.class);
+        Call<DataSet<ProcessoModel, ProcessoRegraModel>> call = endpoint.editar(id);
+        DataSet<ProcessoModel, ProcessoRegraModel> dataSet = Endpoint.execute(call);
+        return dataSet;
     }
 
     public static ProcessoModel salvar(ProcessoModel processoModel) throws Throwable {
@@ -56,6 +65,21 @@ public class ProcessoService extends Service {
                     try {
                         ProcessoModel model = ProcessoService.obter();
                         subscriber.onNext(model);
+                        subscriber.onCompleted();
+                    } catch (Throwable e) {
+                        subscriber.onError(e);
+                    }
+                }
+            });
+        }
+
+        public static Observable<DataSet<ProcessoModel, ProcessoRegraModel>> editar(final Long id) {
+            return Observable.create(new Observable.OnSubscribe<DataSet<ProcessoModel, ProcessoRegraModel>>() {
+                @Override
+                public void call(Subscriber<? super DataSet<ProcessoModel, ProcessoRegraModel>> subscriber) {
+                    try {
+                        DataSet<ProcessoModel, ProcessoRegraModel> dataSet = ProcessoService.editar(id);
+                        subscriber.onNext(dataSet);
                         subscriber.onCompleted();
                     } catch (Throwable e) {
                         subscriber.onError(e);
