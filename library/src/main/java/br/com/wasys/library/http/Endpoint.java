@@ -13,11 +13,11 @@ import java.net.ConnectException;
 import java.net.SocketTimeoutException;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 import br.com.wasys.library.Application;
 import br.com.wasys.library.R;
 import br.com.wasys.library.enumerator.HttpStatus;
-import br.com.wasys.library.enumerator.MediaType;
 import br.com.wasys.library.exception.EndpointException;
 import br.com.wasys.library.utils.JacksonUtils;
 import okhttp3.Interceptor;
@@ -37,6 +37,10 @@ public class Endpoint {
     private static final String TAG = Endpoint.class.getSimpleName();
 
     public static <T> T create(Class<T> clazz, String baseUrl, final Map<String, String> headers) {
+        return create(clazz, baseUrl, headers, null, null, null);
+    }
+
+    public static <T> T create(Class<T> clazz, String baseUrl, final Map<String, String> headers, Long readTimeout, Long writeTimeout, Long connectTimeout) {
         Interceptor interceptor = new Interceptor() {
             @Override
             public okhttp3.Response intercept(Chain chain) throws IOException {
@@ -54,11 +58,16 @@ public class Endpoint {
         };
         OkHttpClient.Builder builder = new OkHttpClient.Builder();
         builder.interceptors().add(interceptor);
-        OkHttpClient client = builder
-                //.readTimeout(30, TimeUnit.SECONDS)
-                //.writeTimeout(30, TimeUnit.SECONDS)
-                //.connectTimeout(30, TimeUnit.SECONDS)
-                .build();
+        if (readTimeout != null) {
+            builder.readTimeout(readTimeout, TimeUnit.SECONDS);
+        }
+        if (writeTimeout != null) {
+            builder.readTimeout(writeTimeout, TimeUnit.SECONDS);
+        }
+        if (connectTimeout != null) {
+            builder.readTimeout(connectTimeout, TimeUnit.SECONDS);
+        }
+        OkHttpClient client = builder.build();
         ObjectMapper objectMapper = JacksonUtils.getObjectMapper();
         JacksonConverterFactory converterFactory = JacksonConverterFactory.create(objectMapper);
         Retrofit retrofit = new Retrofit.Builder()

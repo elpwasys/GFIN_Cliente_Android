@@ -7,7 +7,7 @@ import android.content.Context;
  */
 public class Application extends android.app.Application {
 
-    private static Application instance;
+    protected static Application instance;
 
     @Override
     public void onCreate() {

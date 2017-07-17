@@ -2,8 +2,10 @@ package br.com.wasys.library.utils;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 /**
@@ -38,5 +40,17 @@ public class ImageUtils {
             }
         }
         return inSampleSize;
+    }
+
+    public static void rotate(Uri uri, int degrees) throws IOException {
+        String path = uri.getPath();
+        Bitmap cached = BitmapFactory.decodeFile(path);
+        Matrix matrix = new Matrix();
+        matrix.postRotate(degrees);
+        Bitmap bitmap = Bitmap.createBitmap(cached, 0, 0, cached.getWidth(), cached.getHeight(), matrix, true);
+        FileOutputStream outputStream = new FileOutputStream(path);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 90, outputStream);
+        outputStream.flush();
+        outputStream.close();
     }
 }

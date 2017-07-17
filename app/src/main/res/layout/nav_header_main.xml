@@ -21,6 +21,7 @@
         app:srcCompat="@drawable/ic_logo" />
 
     <TextView
+        android:id="@+id/usuario_nome"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
@@ -30,7 +31,7 @@
         android:textStyle="bold" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/usuario_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="android.studio@android.com"

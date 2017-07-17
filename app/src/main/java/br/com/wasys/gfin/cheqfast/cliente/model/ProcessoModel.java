@@ -1,0 +1,66 @@
+package br.com.wasys.gfin.cheqfast.cliente.model;
+
+import android.content.Context;
+import android.support.annotation.DrawableRes;
+import android.support.annotation.StringRes;
+
+import java.util.ArrayList;
+import java.util.Date;
+
+import br.com.wasys.gfin.cheqfast.cliente.Application;
+import br.com.wasys.gfin.cheqfast.cliente.R;
+import br.com.wasys.library.model.Model;
+import br.com.wasys.library.widget.AppSpinner;
+
+/**
+ * Created by pascke on 24/06/17.
+ */
+
+public class ProcessoModel extends Model {
+
+    public Status status;
+    public Coleta coleta;
+
+    public Date dataCriacao;
+    public TipoProcessoModel tipoProcesso;
+
+    public ArrayList<UploadModel> uploads;
+    public ArrayList<CampoGrupoModel> gruposCampos;
+
+    public enum Coleta {
+        AGUARDANDO_COLETA (R.string.coleta_status_aguardando_coleta, R.drawable.coleta_status_aguardando_coleta),
+        COLETADO (R.string.coleta_status_coletado, R.drawable.coleta_status_coletado),
+        ARMAZENADO (R.string.coleta_status_armazenado, R.drawable.coleta_status_armazenado);
+        public int stringRes;
+        public int drawableRes;
+        Coleta(@StringRes int stringRes, @DrawableRes int drawableRes) {
+            this.stringRes = stringRes;
+            this.drawableRes = drawableRes;
+        }
+    }
+
+    public enum Status implements AppSpinner.Option {
+        RASCUNHO (R.string.processo_status_rascunho, R.drawable.processo_status_rascunho),
+        EM_ANALISE (R.string.processo_status_em_analise, R.drawable.processo_status_em_analise),
+        PENDENTE (R.string.processo_status_pendente, R.drawable.processo_status_pendente),
+        CONCLUIDO (R.string.processo_status_concluido, R.drawable.processo_status_concluido),
+        CANCELADO (R.string.processo_status_cancelado, R.drawable.processo_status_cancelado),
+        AGUARDANDO_APROVACAO (R.string.processo_status_aguardando_aprovacao, R.drawable.processo_status_aguardando_aprovacao),
+        AGUARDANDO_DOCUMENTOS (R.string.processo_status_aguardando_documentos, R.drawable.processo_status_aguardando_documentos);
+        public int stringRes;
+        public int drawableRes;
+        Status(@StringRes int stringRes, @DrawableRes int drawableRes) {
+            this.stringRes = stringRes;
+            this.drawableRes = drawableRes;
+        }
+        @Override
+        public String getValue() {
+            return name();
+        }
+        @Override
+        public String getLabel() {
+            Context context = Application.getContext();
+            return context.getString(stringRes);
+        }
+    }
+}

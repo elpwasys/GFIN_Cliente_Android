@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Environment;
-import android.os.IBinder;
 import android.telephony.TelephonyManager;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -92,6 +91,12 @@ public class AndroidUtils {
         return px;
     }
 
+    public static void throwIfExternalStorageNotWritable() {
+        if (!isExternalStorageWritable()) {
+            throw new IllegalStateException("External storage not mounted");
+        }
+    }
+
     public static boolean isExternalStorageWritable() {
         String state = Environment.getExternalStorageState();
         if (Environment.MEDIA_MOUNTED.equals(state)) {
@@ -128,18 +133,5 @@ public class AndroidUtils {
             return b;
         }
         return false;
-    }
-
-    public static void closeVirtualKeyBoardOnTouch(final Context context, final View view) {
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InputMethodManager manager = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                if (manager != null) {
-                    IBinder windowToken = view.getWindowToken();
-                    manager.hideSoftInputFromWindow(windowToken, 0);
-                }
-            }
-        });
     }
 }

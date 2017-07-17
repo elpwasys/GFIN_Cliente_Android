@@ -2,9 +2,9 @@ package br.com.wasys.gfin.cheqfast.cliente.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 
 import br.com.wasys.gfin.cheqfast.cliente.Dispositivo;
 import br.com.wasys.gfin.cheqfast.cliente.R;

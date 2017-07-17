@@ -9,9 +9,13 @@
                     android:icon="@drawable/ic_menu_file_multiple"
                     android:title="@string/novo" />
                 <item
-                    android:id="@+id/nav_search"
+                    android:id="@+id/nav_pending"
                     android:icon="@drawable/ic_menu_alert"
                     android:title="@string/pendencia" />
+                <item
+                    android:id="@+id/nav_search"
+                    android:icon="@drawable/ic_menu_search"
+                    android:title="@string/pesquisa" />
                 <item
                     android:id="@+id/nav_radar"
                     android:icon="@drawable/ic_menu_wifi"

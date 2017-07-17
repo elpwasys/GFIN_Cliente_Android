@@ -6,6 +6,7 @@
 
     <!-- Blue -->
     <color name="blue_800">#1565C0</color>
+    <color name="blue_500">#2196F3</color>
 
     <!-- Grey -->
     <color name="grey_100">#F5F5F5</color>
@@ -14,6 +15,7 @@
     <color name="grey_500">#9E9E9E</color>
     <color name="grey_600">#757575</color>
     <color name="grey_601">#757575</color>
+    <color name="grey_800">#424242</color>
 
     <!-- Green -->
     <color name="green_500">#4CAF50</color>

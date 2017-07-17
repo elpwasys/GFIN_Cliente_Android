@@ -10,12 +10,9 @@ import io.realm.Realm;
  */
 public class Application extends br.com.wasys.library.Application {
 
-    private static Application instance;
-
     @Override
     public void onCreate() {
         super.onCreate();
-        instance = this;
         Realm.init(this);
         /*RealmConfiguration configuration = new RealmConfiguration.Builder()
                 .name("data.realm")
@@ -27,9 +24,5 @@ public class Application extends br.com.wasys.library.Application {
                         .enableWebKitInspector(RealmInspectorModulesProvider.builder(this).build())
                         .build()
         );
-    }
-
-    public static Application getInstance() {
-        return instance;
     }
 }
