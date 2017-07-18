@@ -30,6 +30,7 @@ import br.com.wasys.gfin.cheqfast.cliente.R;
 import br.com.wasys.gfin.cheqfast.cliente.dataset.DataSet;
 import br.com.wasys.gfin.cheqfast.cliente.dialog.DigitalizacaoDialog;
 import br.com.wasys.gfin.cheqfast.cliente.model.CampoGrupoModel;
+import br.com.wasys.gfin.cheqfast.cliente.model.ChequeModel;
 import br.com.wasys.gfin.cheqfast.cliente.model.DigitalizacaoModel;
 import br.com.wasys.gfin.cheqfast.cliente.model.DocumentoModel;
 import br.com.wasys.gfin.cheqfast.cliente.model.ProcessoModel;
@@ -64,7 +65,7 @@ public class ProcessoDetalheFragment extends CheqFastFragment implements View.On
     @BindView(R.id.text_valor_liberado) TextView mValorLiberadoTextView;
 
     @BindView(R.id.button_info) ImageButton mInfoButton;
-    @BindView(R.id.button_menu) FloatingActionMenu mFloatingActionMenu;
+    @BindView(R.id.fab_menu) FloatingActionMenu mFloatingActionMenu;
     @BindView(R.id.button_aprovar) FloatingActionButton mAprovarFloatingActionButton;
     @BindView(R.id.button_cancelar) FloatingActionButton mCancelarFloatingActionButton;
 
@@ -203,6 +204,10 @@ public class ProcessoDetalheFragment extends CheqFastFragment implements View.On
         mLayoutFields.removeAllViews();
         mLayoutDocumentos.removeAllViews();
 
+        mFloatingActionMenu.setVisibility(View.GONE);
+        mAprovarFloatingActionButton.setEnabled(false);
+        mCancelarFloatingActionButton.setEnabled(false);
+
         if (mProcesso != null) {
 
             Context context = getContext();
@@ -235,16 +240,28 @@ public class ProcessoDetalheFragment extends CheqFastFragment implements View.On
                 LayoutInflater inflater = LayoutInflater.from(context);
                 for (DocumentoModel documento : documentos) {
                     View view = inflater.inflate(R.layout.list_item_documento, null);
+                    DocumentoModel.Status status = documento.status;
                     ImageView statusImageView = ButterKnife.findById(view, R.id.image_status);
                     TextView dataTextView = ButterKnife.findById(view, R.id.text_data);
                     TextView nomeTextView = ButterKnife.findById(view, R.id.text_nome);
                     TextView statusTextView = ButterKnife.findById(view, R.id.text_status);
                     TextView documentoTextView = ButterKnife.findById(view, R.id.text_documento);
-                    statusImageView.setImageResource(documento.status.drawableRes);
+                    statusImageView.setImageResource(status.drawableRes);
                     FieldUtils.setText(dataTextView, documento.dataDigitalizacao);
                     FieldUtils.setText(nomeTextView, documento.nome);
-                    FieldUtils.setText(statusTextView, getString(documento.status.stringRes));
-                    FieldUtils.setText(documentoTextView, "000.000.000-00");
+                    FieldUtils.setText(statusTextView, getString(status.stringRes));
+                    ChequeModel cheque = documento.cheque;
+                    if (cheque != null) {
+                        FieldUtils.setText(documentoTextView, cheque.cpfCnpj);
+                    }
+                    if (DocumentoModel.Status.PENDENTE.equals(status)) {
+                        View viewPendencia = ButterKnife.findById(view, R.id.view_pendencia);
+                        TextView observacaoTextView = ButterKnife.findById(view, R.id.text_observacao);
+                        TextView irregularidadeTextView = ButterKnife.findById(view, R.id.text_irregularidade);
+                        FieldUtils.setText(observacaoTextView, documento.pendenciaObservacao);
+                        FieldUtils.setText(irregularidadeTextView, documento.irregularidadeNome);
+                        viewPendencia.setVisibility(View.VISIBLE);
+                    }
                     view.setTag(documento);
                     view.setOnClickListener(this);
                     mLayoutDocumentos.addView(view);
@@ -260,11 +277,12 @@ public class ProcessoDetalheFragment extends CheqFastFragment implements View.On
                 startAsyncCheckErrorById(mProcesso.id);
             }
 
-            mAprovarFloatingActionButton.setEnabled(false);
-            mCancelarFloatingActionButton.setEnabled(false);
             if (mRegra != null) {
                 mAprovarFloatingActionButton.setEnabled(mRegra.podeAprovar);
                 mCancelarFloatingActionButton.setEnabled(mRegra.podeCancelar);
+                if (mRegra.podeAprovar || mRegra.podeCancelar) {
+                    mFloatingActionMenu.setVisibility(View.VISIBLE);
+                }
             }
         }
     }

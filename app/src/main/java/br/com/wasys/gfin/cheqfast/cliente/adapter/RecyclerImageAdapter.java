@@ -47,7 +47,7 @@ public class RecyclerImageAdapter extends RecyclerView.Adapter<RecyclerImageAdap
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(R.layout.recycler_item_cheque, parent, false);
         ViewHolder viewHolder = new ViewHolder(view);
-        viewHolder.mImageView = ButterKnife.findById(view, R.id.image_cheque);
+        viewHolder.mImageView = ButterKnife.findById(view, R.id.image_cheque_atual);
         viewHolder.mView.setOnClickListener(this);
         return viewHolder;
     }

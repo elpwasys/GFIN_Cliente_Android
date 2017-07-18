@@ -66,7 +66,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:paddingBottom="@dimen/stantard">
 
                 <!-- Dynamic fields -->
                 <LinearLayout
@@ -193,13 +194,13 @@
     </LinearLayout>
 
     <com.github.clans.fab.FloatingActionMenu
-        android:id="@+id/button_menu"
+        android:id="@+id/fab_menu"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:paddingRight="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="10dp"
-
+        android:visibility="gone"
         app:menu_labels_ellipsize="end"
         app:menu_labels_singleLine="true"
         app:menu_backgroundColor="#ccffffff">

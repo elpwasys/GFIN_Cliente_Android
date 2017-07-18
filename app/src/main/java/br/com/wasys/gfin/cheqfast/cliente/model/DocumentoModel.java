@@ -17,6 +17,7 @@ public class DocumentoModel extends Model {
 
     public String nome;
     public Status status;
+
     public Integer versaoAtual;
     public Integer qtdeImagens;
     public Date dataDigitalizacao;
@@ -30,6 +31,7 @@ public class DocumentoModel extends Model {
     public String pendenciaObservacao;
     public String pendenciaJustificativa;
 
+    public ChequeModel cheque;
     public List<ImagemModel> imagens;
 
     public enum Status {

@@ -7,7 +7,7 @@
     android:background="@drawable/bg_recycler_item">
 
     <ImageView
-        android:id="@+id/image_cheque"
+        android:id="@+id/image_cheque_atual"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true" />

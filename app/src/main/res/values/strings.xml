@@ -115,5 +115,13 @@
     <string name="aprovar">Aprovar</string>
     <string name="msg_aprovar_processo">Deseja aprovar o valor para este lote?</string>
     <string name="msg_cancelar_processo">Deseja cancelar o valor para este lote?</string>
+    <string name="justificar">Justificar</string>
+    <string name="substituir">Substibuir</string>
+    <string name="msg_substituir_cheque">Deseja substituir essa cheque?</string>
+    <string name="clique_substituir">Clique para substituir</string>
+    <string name="msg_documento_enviado_sucesso">Documento enviado com sucesso</string>
+    <string name="msg_documento_reenviado">Documento reenviado com sucesso</string>
+    <string name="justificativa">Justificativa</string>
+    <string name="msg_justificativa_sucesso">Justificativa enviada com sucesso</string>
 
 </resources>

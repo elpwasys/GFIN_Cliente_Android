@@ -64,7 +64,7 @@ public class ProcessoNovoFragment extends CheqFastFragment implements RecyclerIm
     @BindView(R.id.text_info) TextView mInfoTextView;
     @BindView(R.id.recycler_view) RecyclerView mRecyclerView;
 
-    @BindView(R.id.button_menu) FloatingActionMenu mMenuButton;
+    @BindView(R.id.fab_menu) FloatingActionMenu mMenuButton;
     @BindView(R.id.button_capturar) FloatingActionButton mCapturarButton;
     @BindView(R.id.button_finalizar) FloatingActionButton mFinalizarButton;
 
