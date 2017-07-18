@@ -48,6 +48,7 @@ import br.com.wasys.gfin.cheqfast.cliente.model.UploadModel;
 import br.com.wasys.gfin.cheqfast.cliente.service.ImagemService;
 import br.com.wasys.gfin.cheqfast.cliente.service.ProcessoService;
 import br.com.wasys.library.utils.AndroidUtils;
+import br.com.wasys.library.utils.FragmentUtils;
 import br.com.wasys.library.utils.ImageUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -280,10 +281,15 @@ public class ProcessoNovoFragment extends CheqFastFragment implements RecyclerIm
 
     private void onAsyncSalvarCompleted(ProcessoModel model) {
         Toast.makeText(getContext(), R.string.msg_processo_salvo_sucesso, Toast.LENGTH_LONG).show();
-        mRecyclerImageAdapter.clear();
+        /*mRecyclerImageAdapter.clear();
         setVisibilities();
         mMenuButton.setVisibility(View.INVISIBLE);
-        startAsyncObter();
+        startAsyncObter();*/
+        Long id = model.id;
+        FragmentActivity activity = getActivity();
+        FragmentUtils.popBackStackImmediate(activity, getBackStackName());
+        ProcessoDetalheFragment fragment = ProcessoDetalheFragment.newInstance(id);
+        FragmentUtils.replace(activity, R.id.content_main, fragment, fragment.getBackStackName());
     }
 
     // ASYNC METHODS

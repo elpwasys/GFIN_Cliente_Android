@@ -40,6 +40,20 @@ public class ProcessoService extends Service {
         return dataSet;
     }
 
+    public static DataSet<ProcessoModel, ProcessoRegraModel> aprovar(Long id) throws Throwable {
+        ProcessoEndpoint endpoint = Endpoint.create(ProcessoEndpoint.class);
+        Call<DataSet<ProcessoModel, ProcessoRegraModel>> call = endpoint.aprovar(id);
+        DataSet<ProcessoModel, ProcessoRegraModel> dataSet = Endpoint.execute(call);
+        return dataSet;
+    }
+
+    public static DataSet<ProcessoModel, ProcessoRegraModel> cancelar(Long id) throws Throwable {
+        ProcessoEndpoint endpoint = Endpoint.create(ProcessoEndpoint.class);
+        Call<DataSet<ProcessoModel, ProcessoRegraModel>> call = endpoint.cancelar(id);
+        DataSet<ProcessoModel, ProcessoRegraModel> dataSet = Endpoint.execute(call);
+        return dataSet;
+    }
+
     public static ProcessoModel salvar(ProcessoModel processoModel) throws Throwable {
         ProcessoEndpoint endpoint = Endpoint.create(ProcessoEndpoint.class);
         Call<ProcessoModel> call = endpoint.salvar(processoModel);
@@ -73,6 +87,21 @@ public class ProcessoService extends Service {
             });
         }
 
+        public static Observable<ProcessoModel> salvar(final ProcessoModel processoModel) {
+            return Observable.create(new Observable.OnSubscribe<ProcessoModel>() {
+                @Override
+                public void call(Subscriber<? super ProcessoModel> subscriber) {
+                    try {
+                        ProcessoModel model = ProcessoService.salvar(processoModel);
+                        subscriber.onNext(model);
+                        subscriber.onCompleted();
+                    } catch (Throwable e) {
+                        subscriber.onError(e);
+                    }
+                }
+            });
+        }
+
         public static Observable<DataSet<ProcessoModel, ProcessoRegraModel>> editar(final Long id) {
             return Observable.create(new Observable.OnSubscribe<DataSet<ProcessoModel, ProcessoRegraModel>>() {
                 @Override
@@ -88,13 +117,28 @@ public class ProcessoService extends Service {
             });
         }
 
-        public static Observable<ProcessoModel> salvar(final ProcessoModel processoModel) {
-            return Observable.create(new Observable.OnSubscribe<ProcessoModel>() {
+        public static Observable<DataSet<ProcessoModel, ProcessoRegraModel>> aprovar(final Long id) {
+            return Observable.create(new Observable.OnSubscribe<DataSet<ProcessoModel, ProcessoRegraModel>>() {
                 @Override
-                public void call(Subscriber<? super ProcessoModel> subscriber) {
+                public void call(Subscriber<? super DataSet<ProcessoModel, ProcessoRegraModel>> subscriber) {
                     try {
-                        ProcessoModel model = ProcessoService.salvar(processoModel);
-                        subscriber.onNext(model);
+                        DataSet<ProcessoModel, ProcessoRegraModel> dataSet = ProcessoService.aprovar(id);
+                        subscriber.onNext(dataSet);
+                        subscriber.onCompleted();
+                    } catch (Throwable e) {
+                        subscriber.onError(e);
+                    }
+                }
+            });
+        }
+
+        public static Observable<DataSet<ProcessoModel, ProcessoRegraModel>> cancelar(final Long id) {
+            return Observable.create(new Observable.OnSubscribe<DataSet<ProcessoModel, ProcessoRegraModel>>() {
+                @Override
+                public void call(Subscriber<? super DataSet<ProcessoModel, ProcessoRegraModel>> subscriber) {
+                    try {
+                        DataSet<ProcessoModel, ProcessoRegraModel> dataSet = ProcessoService.cancelar(id);
+                        subscriber.onNext(dataSet);
                         subscriber.onCompleted();
                     } catch (Throwable e) {
                         subscriber.onError(e);

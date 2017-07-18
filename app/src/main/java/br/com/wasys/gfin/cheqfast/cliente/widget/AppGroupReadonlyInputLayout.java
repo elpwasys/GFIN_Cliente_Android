@@ -100,7 +100,7 @@ public class AppGroupReadonlyInputLayout extends LinearLayout {
         layoutParams.setMargins(margin, marginTop, margin, margin);
         textlView.setLayoutParams(layoutParams);
         TextViewCompat.setTextAppearance(textlView, android.R.style.TextAppearance_Small);
-        int color = ResourcesCompat.getColor(getResources(), R.color.grey_800, null);
+        int color = ResourcesCompat.getColor(getResources(), R.color.grey_600, null);
         textlView.setTextColor(color);
         addView(textlView);
     }
@@ -115,7 +115,7 @@ public class AppGroupReadonlyInputLayout extends LinearLayout {
         layoutParams.setMargins(margin, marginTop, margin, margin);
         textlView.setLayoutParams(layoutParams);
         TextViewCompat.setTextAppearance(textlView, android.R.style.TextAppearance_Small);
-        int color = ResourcesCompat.getColor(getResources(), R.color.grey_600, null);
+        int color = ResourcesCompat.getColor(getResources(), R.color.grey_400, null);
         textlView.setTextColor(color);
         Drawable drawable = ResourcesCompat.getDrawable(getResources(), R.drawable.bg_field_readonly, null);
         textlView.setBackground(drawable);

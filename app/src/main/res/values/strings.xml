@@ -93,11 +93,27 @@
     <string name="status_processo">Status do processo</string>
     <string name="limpar">Limpar</string>
     <string name="coleta_processo">Status da coleta</string>
+    <string name="msg_sem_info_digitalizacao">Não há informações de digitalização</string>
+    <string name="msg_processo_enviado">Processo enviado com sucesso</string>
     <string name="atualizar">Atualizar</string>
     <string name="ontem">Ontem</string>
     <string name="anteontem">Anteontem</string>
     <string name="data_hora">Data / hora</string>
     <string name="taxa">Taxa</string>
     <string name="valor_liberado">Valor liberado</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cheque">Cheque</string>
+    <string name="detalhe">Detalhe</string>
+    <string name="abrir">Abrir</string>
+    <string name="data">Data</string>
+    <string name="tentativas">Tentativas</string>
+    <string name="mensagem">Mensagem</string>
+    <string name="reenviar">Reenviar</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="aprovar">Aprovar</string>
+    <string name="msg_aprovar_processo">Deseja aprovar o valor para este lote?</string>
+    <string name="msg_cancelar_processo">Deseja cancelar o valor para este lote?</string>
 
 </resources>

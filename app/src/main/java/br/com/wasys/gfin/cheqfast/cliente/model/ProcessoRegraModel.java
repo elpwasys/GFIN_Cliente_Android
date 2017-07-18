@@ -14,6 +14,8 @@ public class ProcessoRegraModel implements Serializable {
     public boolean podeEnviar;
     public boolean podeEditar;
     public boolean podeExcluir;
+    public boolean podeAprovar;
+    public boolean podeCancelar;
     public boolean podeDigitalizar;
     public boolean podeResponderPendencia;
 

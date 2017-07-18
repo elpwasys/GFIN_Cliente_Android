@@ -22,4 +22,10 @@ public interface ProcessoEndpoint {
 
     @GET("processo/editar/{id}")
     Call<DataSet<ProcessoModel, ProcessoRegraModel>> editar(@Path("id") Long id);
+
+    @GET("processo/aprovar/{id}")
+    Call<DataSet<ProcessoModel, ProcessoRegraModel>> aprovar(@Path("id") Long id);
+
+    @GET("processo/cancelar/{id}")
+    Call<DataSet<ProcessoModel, ProcessoRegraModel>> cancelar(@Path("id") Long id);
 }

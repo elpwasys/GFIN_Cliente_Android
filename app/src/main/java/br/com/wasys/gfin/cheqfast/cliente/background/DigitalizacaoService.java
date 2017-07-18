@@ -14,28 +14,15 @@ import android.support.annotation.Nullable;
 import android.util.Log;
 import android.webkit.MimeTypeMap;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-
 import org.apache.commons.collections4.CollectionUtils;
-import org.apache.commons.collections4.MapUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 
-import java.io.BufferedInputStream;
-import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
-import br.com.wasys.gfin.cheqfast.cliente.BuildConfig;
 import br.com.wasys.gfin.cheqfast.cliente.R;
 import br.com.wasys.gfin.cheqfast.cliente.endpoint.DigitalizacaoEndpoint;
 import br.com.wasys.gfin.cheqfast.cliente.endpoint.Endpoint;
@@ -45,7 +32,6 @@ import br.com.wasys.gfin.cheqfast.cliente.model.ResultModel;
 import br.com.wasys.gfin.cheqfast.cliente.realm.Arquivo;
 import br.com.wasys.gfin.cheqfast.cliente.realm.Digitalizacao;
 import br.com.wasys.library.exception.AppException;
-import br.com.wasys.library.utils.JacksonUtils;
 import br.com.wasys.library.utils.TypeUtils;
 import io.realm.Realm;
 import io.realm.RealmList;
@@ -139,7 +125,7 @@ public class DigitalizacaoService extends Service {
         if (model != null) {
             try {
                 update(model.id, DigitalizacaoModel.Status.ENVIANDO);
-                upload2(tipo, referencia, model.arquivos);
+                upload(tipo, referencia, model.arquivos);
                 delete(model.id);
                 update(model.id, DigitalizacaoModel.Status.ENVIADO);
                 Log.d(TAG, "Sucesso na digitalizacao " + referencia + ".");
@@ -271,7 +257,7 @@ public class DigitalizacaoService extends Service {
         }
     }
 
-    private void upload2(DigitalizacaoModel.Tipo tipo, String referencia, List<ArquivoModel> models) throws Throwable {
+    private void upload(DigitalizacaoModel.Tipo tipo, String referencia, List<ArquivoModel> models) throws Throwable {
 
         Log.d(TAG, "Iniciando o upload dos arquivos da digitalizacao " + referencia + "....");
 
@@ -320,122 +306,6 @@ public class DigitalizacaoService extends Service {
                 Log.d(TAG, "Enviando imagens...");
 
                 ResultModel resultModel = Endpoint.execute(call);
-
-                if (!resultModel.success) {
-                    Log.e(TAG, "Falha no envio das imagens.");
-                    String messages = resultModel.getMessages();
-                    throw new AppException(messages);
-                }
-
-                Log.d(TAG, "Sucesso no envio das imagens.");
-            }
-        }
-    }
-
-    private void upload(DigitalizacaoModel.Tipo tipo, String referencia, List<ArquivoModel> models) throws Throwable {
-
-        if (CollectionUtils.isNotEmpty(models)) {
-
-            Log.d(TAG, "Iniciando o upload dos arquivos da digitalizacao " + referencia + "....");
-
-            Log.d(TAG, "Listando imagens para enviar...");
-            List<File> files = new ArrayList<>(models.size());
-            for (ArquivoModel model : models) {
-                File file = new File(model.caminho);
-                if (file.exists()) {
-                    files.add(file);
-                    Log.d(TAG, "Imagem '" + file.getAbsolutePath() + "' encontrado...");
-                }
-            }
-
-            if (CollectionUtils.isNotEmpty(files)) {
-
-                Log.d(TAG, "Iniciando conexao...");
-
-                Map<String, String> headers = Endpoint.getHeaders();
-
-                String spec = BuildConfig.BASE_URL;
-                if (DigitalizacaoModel.Tipo.DOCUMENTO.equals(tipo)) {
-                    spec += BuildConfig.DIGITALIZACAO_DOCUMENTO_PATH;
-                } else {
-                    spec += BuildConfig.DIGITALIZACAO_TIPIFICACAO_PATH;
-                }
-
-
-                URL url = new URL(spec);
-                HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-
-                connection.setRequestMethod("POST");
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-
-                Log.d(TAG, "Configurando parametros...");
-
-                if (MapUtils.isNotEmpty(headers)) {
-                    Set<Map.Entry<String, String>> entries = headers.entrySet();
-                    for (Map.Entry<String, String> entry : entries) {
-                        String key = entry.getKey();
-                        String value = entry.getValue();
-                        connection.setRequestProperty(key, value);
-                    }
-                }
-
-                connection.connect();
-
-                OutputStream outputStream = connection.getOutputStream();
-                DataOutputStream dataOutputStream = new DataOutputStream(outputStream);
-
-                Long id = Long.valueOf(referencia);
-
-                dataOutputStream.writeLong(id); // ID DO PROCESSO OU DOCUMENTO
-                dataOutputStream.writeInt(files.size()); // QUANTIDADE DE IMAGENS
-
-                Log.d(TAG, "Quantidade de imagens para enviar " + files.size() + ".");
-
-                for (File file : files) {
-
-                    String name = file.getName();
-                    String extension = MimeTypeMap.getFileExtensionFromUrl(name);
-
-                    Log.d(TAG, "Iniciando stream da imagem " + name + "...");
-
-                    dataOutputStream.writeUTF(extension); // EXTENSAO DO ARQUIVO
-                    dataOutputStream.writeLong(file.length()); // TAMANHO DO ARQUIVO
-
-                    FileInputStream fileInputStream = new FileInputStream(file);
-                    BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInputStream);
-
-                    // BYTES DO ARQUIVO
-                    int i = 0;
-                    byte[] bytes = new byte[1024];
-                    while ((i = bufferedInputStream.read(bytes)) != -1) {
-                        dataOutputStream.write(bytes, 0, i);
-                        dataOutputStream.flush();
-                    }
-
-                    Log.d(TAG, "Stream da imagem " + name + " finalizado com sucesso.");
-                }
-
-                dataOutputStream.flush();
-                dataOutputStream.close();
-
-                Log.d(TAG, "Stream das imagens finalizado com sucesso.");
-
-                Log.d(TAG, "Extraindo resposta do servidor...");
-
-                InputStream inputStream;
-                int responseCode = connection.getResponseCode();
-
-                Log.d(TAG, "Status da resposta " + responseCode + ".");
-
-                if (responseCode == 200) {
-                    inputStream = connection.getInputStream();
-                } else {
-                    inputStream = connection.getErrorStream();
-                }
-
-                ObjectMapper objectMapper = JacksonUtils.getObjectMapper();
-                ResultModel resultModel = objectMapper.readValue(inputStream, ResultModel.class);
 
                 if (!resultModel.success) {
                     Log.e(TAG, "Falha no envio das imagens.");

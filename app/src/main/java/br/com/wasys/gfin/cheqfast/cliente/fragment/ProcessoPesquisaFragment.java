@@ -153,7 +153,7 @@ public class ProcessoPesquisaFragment extends CheqFastFragment implements Adapte
         Adapter adapter = parent.getAdapter();
         ProcessoModel processo = (ProcessoModel) adapter.getItem(position);
         ProcessoDetalheFragment fragment = ProcessoDetalheFragment.newInstance(processo.id);
-        FragmentUtils.replace(getActivity(), R.id.content_main, fragment, fragment.getClass().getSimpleName());
+        FragmentUtils.replace(getActivity(), R.id.content_main, fragment, fragment.getBackStackName());
     }
 
     private void prepare() {

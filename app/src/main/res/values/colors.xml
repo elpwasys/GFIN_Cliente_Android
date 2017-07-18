@@ -2,6 +2,7 @@
 <resources>
     <!-- Red -->
     <color name="red_500">#F44336</color>
+    <color name="red_800">#C62828</color>
     <color name="red_pending">#A10005</color>
 
     <!-- Blue -->
@@ -24,6 +25,10 @@
     <!-- Orange -->
     <color name="orange_500">#FF9800</color>
     <color name="orange_800">#EF6C00</color>
+
+    <!-- Yellow -->
+    <color name="yellow_500">#FFEB3B</color>
+    <color name="yellow_800">#F9A825</color>
 
     <!-- White -->
     <color name="white">#FFFFFF</color>

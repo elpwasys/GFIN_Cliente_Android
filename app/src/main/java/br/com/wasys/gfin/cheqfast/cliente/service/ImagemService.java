@@ -6,15 +6,25 @@ import android.util.Log;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Map;
 
+import br.com.wasys.gfin.cheqfast.cliente.Application;
 import br.com.wasys.gfin.cheqfast.cliente.BuildConfig;
 import br.com.wasys.gfin.cheqfast.cliente.Permission;
+import br.com.wasys.gfin.cheqfast.cliente.endpoint.Endpoint;
+import br.com.wasys.gfin.cheqfast.cliente.endpoint.ImagemEndpoint;
+import br.com.wasys.gfin.cheqfast.cliente.model.ImagemModel;
 import br.com.wasys.library.service.Service;
 import br.com.wasys.library.utils.AndroidUtils;
 import br.com.wasys.library.utils.DateUtils;
 import br.com.wasys.library.utils.FileUtils;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import rx.Observable;
+import rx.Subscriber;
 
 /**
  * Created by pascke on 03/09/16.
@@ -154,6 +164,58 @@ public class ImagemService extends Service {
             String message = "Fail to create image in " + folder + ".";
             Log.e(TAG, message, e);
             throw new IllegalStateException(message);
+        }
+    }
+
+    /**
+     *
+     * @param caminho
+     * @return
+     * @throws Throwable
+     */
+    public static ImagemModel carregar(String caminho) throws Throwable {
+        ImagemModel model = new ImagemModel();
+        String dirs = caminho.substring(0, caminho.lastIndexOf("/"));
+        String dirName = Application.getContext().getCacheDir().getAbsolutePath() + File.separator + dirs;
+        String fileName = caminho.substring(caminho.lastIndexOf("/") + 1);
+        File file = new File(dirName, fileName);
+        model.path = file.getAbsolutePath();
+        model.cache = true;
+        if (!file.exists()) {
+            Map<String, String> headers = Endpoint.getHeaders();
+            String baseURL = BuildConfig.SERVER_URL + dirs + "/";
+            ImagemEndpoint endpoint = br.com.wasys.library.http.Endpoint.create(ImagemEndpoint.class, baseURL, headers);
+            Call<ResponseBody> call = endpoint.carregar(fileName);
+            ResponseBody responseBody = br.com.wasys.library.http.Endpoint.execute(call);
+            byte[] bytes = responseBody.bytes();
+            File parentFile = file.getParentFile();
+            if (!parentFile.exists()) {
+                parentFile.mkdirs();
+            }
+            file.createNewFile();
+            FileOutputStream fileOutputStream = new FileOutputStream(file);
+            fileOutputStream.write(bytes);
+            fileOutputStream.flush();
+            fileOutputStream.close();
+        }
+        return model;
+    }
+
+    public static class Async {
+
+        public static Observable<ImagemModel> carregar(final String caminho) {
+            return Observable.create(new Observable.OnSubscribe<ImagemModel>() {
+                @Override
+                public void call(Subscriber<? super ImagemModel> subscriber) {
+                    try {
+                        ImagemModel model = ImagemService.carregar(caminho);
+                        subscriber.onNext(model);
+                        subscriber.onCompleted();
+                    } catch (Throwable e) {
+                        subscriber.onError(e);
+                    }
+                }
+            });
         }
     }
 }

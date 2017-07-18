@@ -22,9 +22,14 @@ public class ProcessoModel extends Model {
     public Coleta coleta;
 
     public Date dataCriacao;
+
+    public Double taxa;
+    public Double valorLiberado;
+
     public TipoProcessoModel tipoProcesso;
 
     public ArrayList<UploadModel> uploads;
+    public ArrayList<DocumentoModel> documentos;
     public ArrayList<CampoGrupoModel> gruposCampos;
 
     public enum Coleta implements AppSpinner.Option {

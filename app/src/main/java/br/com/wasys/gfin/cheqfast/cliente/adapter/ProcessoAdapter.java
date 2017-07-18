@@ -33,11 +33,11 @@ public class ProcessoAdapter extends ListAdapter<ProcessoModel> {
         else {
             holder = new ViewHolder();
             view = mInflater.inflate(R.layout.list_item_processo, null);
-            holder.idTextView = (TextView) view.findViewById(R.id.text_view_id);
-            holder.dataTextView = (TextView) view.findViewById(R.id.text_view_data);
-            holder.statusTextView = (TextView) view.findViewById(R.id.text_view_status);
+            holder.idTextView = (TextView) view.findViewById(R.id.text_nome);
+            holder.dataTextView = (TextView) view.findViewById(R.id.text_data);
+            holder.statusTextView = (TextView) view.findViewById(R.id.text_status);
             holder.coletaTextView = (TextView) view.findViewById(R.id.text_view_coleta);
-            holder.statusImageView = (ImageView) view.findViewById(R.id.image_view_status);
+            holder.statusImageView = (ImageView) view.findViewById(R.id.image_status);
             holder.coletaImageView = (ImageView) view.findViewById(R.id.image_view_coleta);
             view.setTag(holder);
         }
