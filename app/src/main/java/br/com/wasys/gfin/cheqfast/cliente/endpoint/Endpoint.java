@@ -25,12 +25,13 @@ import retrofit2.Call;
  */
 public class Endpoint {
 
-    public static final String BASE_URL = BuildConfig.BASE_URL;
+    public static final String URL_REST = BuildConfig.URL_REST;
 
     public static Map<String, String> getHeaders() {
         Context context = Application.getContext();
         Map<String, String> headers = new HashMap<>();
         headers.put(DeviceHeader.DEVICE_SO.key, "Android");
+        headers.put(DeviceHeader.DEVICE_APP.key, BuildConfig.APP);
         headers.put(DeviceHeader.DEVICE_MODEL.key, Build.MODEL);
         headers.put(DeviceHeader.DEVICE_SO_VERSION.key, Build.VERSION.RELEASE);
         headers.put(DeviceHeader.DEVICE_WIDTH.key, String.valueOf(AndroidUtils.getWidthPixels(context)));
@@ -57,7 +58,7 @@ public class Endpoint {
     public static <T> T create(Class<T> clazz, Long readTimeout, Long writeTimeout, Long connectTimeout) {
         Map<String, String> headers = getHeaders();
         headers.put("Content-Type", MediaType.APPLICATION_JSON.value);
-        return br.com.wasys.library.http.Endpoint.create(clazz, BASE_URL, headers, readTimeout, writeTimeout, connectTimeout);
+        return br.com.wasys.library.http.Endpoint.create(clazz, URL_REST, headers, readTimeout, writeTimeout, connectTimeout);
     }
 
     public static <T> T execute(Call<T> call) throws EndpointException {

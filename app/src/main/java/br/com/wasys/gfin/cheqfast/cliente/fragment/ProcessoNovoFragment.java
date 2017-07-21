@@ -209,6 +209,7 @@ public class ProcessoNovoFragment extends CheqFastFragment implements RecyclerIm
 
     private void prepare() {
         setTitle(R.string.cheques);
+        mMenuButton.setClosedOnTouchOutside(true);
         mLayoutManager = new LinearLayoutManager(getContext());
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(mLayoutManager);
@@ -218,7 +219,6 @@ public class ProcessoNovoFragment extends CheqFastFragment implements RecyclerIm
         ItemTouchHelper.Callback callback = new SimpleItemTouchHelperCallback(mRecyclerImageAdapter);
         mItemTouchHelper = new ItemTouchHelper(callback);
         mItemTouchHelper.attachToRecyclerView(mRecyclerView);
-
     }
 
     private void destroyViewUri() {

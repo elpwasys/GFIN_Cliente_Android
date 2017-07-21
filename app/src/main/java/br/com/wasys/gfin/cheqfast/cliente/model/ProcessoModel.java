@@ -60,7 +60,8 @@ public class ProcessoModel extends Model {
         CONCLUIDO (R.string.processo_status_concluido, R.drawable.processo_status_concluido),
         CANCELADO (R.string.processo_status_cancelado, R.drawable.processo_status_cancelado),
         AGUARDANDO_APROVACAO (R.string.processo_status_aguardando_aprovacao, R.drawable.processo_status_aguardando_aprovacao),
-        AGUARDANDO_DOCUMENTOS (R.string.processo_status_aguardando_documentos, R.drawable.processo_status_aguardando_documentos);
+        AGUARDANDO_DOCUMENTOS (R.string.processo_status_aguardando_documentos, R.drawable.processo_status_aguardando_documentos),
+        EM_LIBERACAO (R.string.processo_status_em_liberacao, R.drawable.processo_status_em_liberacao);
         public int stringRes;
         public int drawableRes;
         Status(@StringRes int stringRes, @DrawableRes int drawableRes) {

@@ -8,6 +8,7 @@ package br.com.wasys.library.enumerator;
  */
 public enum DeviceHeader {
 	DEVICE_SO ("Device-SO"),
+	DEVICE_APP ("Device-App"),
 	DEVICE_TOKEN ("Device-Token"),
 	DEVICE_MODEL ("Device-Model"),
 	DEVICE_WIDTH ("Device-Width"),

@@ -311,6 +311,7 @@ public class DocumentoDetalheFragment extends CheqFastFragment {
         if (mId != null) {
             startAsyncObter(mId);
         }
+        mFloatingActionMenu.setClosedOnTouchOutside(true);
     }
 
     private void populate() {

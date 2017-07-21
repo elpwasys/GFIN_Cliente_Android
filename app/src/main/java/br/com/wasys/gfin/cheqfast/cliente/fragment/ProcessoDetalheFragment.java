@@ -181,6 +181,7 @@ public class ProcessoDetalheFragment extends CheqFastFragment implements View.On
     private void prepare() {
         setTitle(R.string.detalhe);
         setRootViewVisibility(View.GONE);
+        mFloatingActionMenu.setClosedOnTouchOutside(true);
     }
 
     private void aprovar() {

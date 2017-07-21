@@ -3,6 +3,15 @@ apply plugin: 'com.neenbedankt.android-apt'
 apply plugin: 'realm-android'
 
 android {
+    signingConfigs {
+        release {
+            keyAlias 'Cheqfast-Cliente'
+            keyPassword 'schwartz'
+            storeFile file('/Users/pascke/Wasys/Projetos/Cheqfast/Android/Cliente/keystore.jks')
+            storePassword 'schwartz'
+        }
+    }
+    def properties = { k -> "\"${project.properties.get(k)}\"" }
     compileSdkVersion 23
     buildToolsVersion "25.0.2"
     defaultConfig {
@@ -12,22 +21,23 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        // build config fields
+        buildConfigField('String', 'APP', '"Cliente"')
+        buildConfigField('String', 'APP_DIRECTORY_NAME', '"Gfin.Cheqfast.Cliente"')
+        buildConfigField('String', 'URL_REST', 'BuildConfig.URL_BASE + "/rest/"')
+        buildConfigField('String', 'TERMO_URL', 'BuildConfig.URL_BASE + "/termo.html"')
     }
     buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-        }
         debug {
             minifyEnabled false
             debuggable true
-            buildConfigField 'String', 'APP_DIRECTORY_NAME', "\"Gfin.Cheqfast.Cliente\""
-            buildConfigField 'String', 'BASE_URL', "\"http://wasys-ocr2.wasys.com.br:84/cheqfast/rest/\""
-            buildConfigField 'String', 'TERMO_URL', "\"http://wasys-ocr2.wasys.com.br:84/cheqfast/termo.html\""
-            buildConfigField 'String', 'SERVER_URL', "\"http://wasys-ocr2.wasys.com.br:84/cheqfast/\""
-            /*buildConfigField 'String', 'BASE_URL', "\"http://192.168.100.20:8080/cheqfast/rest/\""
-            buildConfigField 'String', 'TERMO_URL', "\"http://192.168.100.20:8080/cheqfast/termo.html\""
-            buildConfigField 'String', 'SERVER_URL', "\"http://192.168.100.20:8080/cheqfast/\""*/
+            buildConfigField('String', 'URL_BASE', properties('debug.server.url'))
+            signingConfig signingConfigs.release
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            buildConfigField('String', 'URL_BASE', properties('release.server.url'))
         }
     }
     packagingOptions {
