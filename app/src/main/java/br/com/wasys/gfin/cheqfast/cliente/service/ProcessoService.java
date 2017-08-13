@@ -13,6 +13,7 @@ import br.com.wasys.gfin.cheqfast.cliente.endpoint.ProcessoEndpoint;
 import br.com.wasys.gfin.cheqfast.cliente.model.DigitalizacaoModel;
 import br.com.wasys.gfin.cheqfast.cliente.model.ProcessoModel;
 import br.com.wasys.gfin.cheqfast.cliente.model.ProcessoRegraModel;
+import br.com.wasys.gfin.cheqfast.cliente.model.TransferenciaModel;
 import br.com.wasys.gfin.cheqfast.cliente.model.UploadModel;
 import br.com.wasys.library.service.Service;
 import retrofit2.Call;
@@ -40,9 +41,9 @@ public class ProcessoService extends Service {
         return dataSet;
     }
 
-    public static DataSet<ProcessoModel, ProcessoRegraModel> aprovar(Long id) throws Throwable {
+    public static DataSet<ProcessoModel, ProcessoRegraModel> aprovar(Long id, TransferenciaModel model) throws Throwable {
         ProcessoEndpoint endpoint = Endpoint.create(ProcessoEndpoint.class);
-        Call<DataSet<ProcessoModel, ProcessoRegraModel>> call = endpoint.aprovar(id);
+        Call<DataSet<ProcessoModel, ProcessoRegraModel>> call = endpoint.aprovar(id, model);
         DataSet<ProcessoModel, ProcessoRegraModel> dataSet = Endpoint.execute(call);
         return dataSet;
     }
@@ -117,12 +118,12 @@ public class ProcessoService extends Service {
             });
         }
 
-        public static Observable<DataSet<ProcessoModel, ProcessoRegraModel>> aprovar(final Long id) {
+        public static Observable<DataSet<ProcessoModel, ProcessoRegraModel>> aprovar(final Long id, final TransferenciaModel model) {
             return Observable.create(new Observable.OnSubscribe<DataSet<ProcessoModel, ProcessoRegraModel>>() {
                 @Override
                 public void call(Subscriber<? super DataSet<ProcessoModel, ProcessoRegraModel>> subscriber) {
                     try {
-                        DataSet<ProcessoModel, ProcessoRegraModel> dataSet = ProcessoService.aprovar(id);
+                        DataSet<ProcessoModel, ProcessoRegraModel> dataSet = ProcessoService.aprovar(id, model);
                         subscriber.onNext(dataSet);
                         subscriber.onCompleted();
                     } catch (Throwable e) {

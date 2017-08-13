@@ -3,6 +3,7 @@ package br.com.wasys.gfin.cheqfast.cliente.endpoint;
 import br.com.wasys.gfin.cheqfast.cliente.dataset.DataSet;
 import br.com.wasys.gfin.cheqfast.cliente.model.ProcessoModel;
 import br.com.wasys.gfin.cheqfast.cliente.model.ProcessoRegraModel;
+import br.com.wasys.gfin.cheqfast.cliente.model.TransferenciaModel;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -23,8 +24,8 @@ public interface ProcessoEndpoint {
     @GET("processo/editar/{id}")
     Call<DataSet<ProcessoModel, ProcessoRegraModel>> editar(@Path("id") Long id);
 
-    @GET("processo/aprovar/{id}")
-    Call<DataSet<ProcessoModel, ProcessoRegraModel>> aprovar(@Path("id") Long id);
+    @POST("processo/aprovar/{id}")
+    Call<DataSet<ProcessoModel, ProcessoRegraModel>> aprovar(@Path("id") Long id, @Body TransferenciaModel transferenciaModel);
 
     @GET("processo/cancelar/{id}")
     Call<DataSet<ProcessoModel, ProcessoRegraModel>> cancelar(@Path("id") Long id);

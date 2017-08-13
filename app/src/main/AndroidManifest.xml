@@ -51,7 +51,7 @@
         </activity>
         <activity
             android:name=".activity.RadarActivity"
-            android:label="@string/radar_cpf_cnpj"
+            android:label="@string/consulta"
             android:parentActivityName=".activity.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
@@ -66,8 +66,15 @@
                 android:value=".activity.MainActivity" />
         </activity>
         <activity android:name=".activity.MeusDadosActivity" />
-        <activity android:name=".activity.ProcessoNovoActivity"></activity>
+        <activity android:name=".activity.ProcessoNovoActivity" />
+
         <service android:name=".background.DigitalizacaoService" />
+
+        <activity
+            android:name=".activity.AbraSuaContaActivity"
+            android:configChanges="keyboardHidden"
+            android:screenOrientation="portrait"
+            />
     </application>
 
 </manifest>

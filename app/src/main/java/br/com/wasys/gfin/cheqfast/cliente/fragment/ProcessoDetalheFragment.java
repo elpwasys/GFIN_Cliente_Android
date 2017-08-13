@@ -51,7 +51,7 @@ import static br.com.wasys.gfin.cheqfast.cliente.background.DigitalizacaoService
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProcessoDetalheFragment extends CheqFastFragment implements View.OnClickListener {
+public class ProcessoDetalheFragment extends CheqFastFragment implements View.OnClickListener, TransferenciaFragment.OnTransferenciaListener {
 
     @BindView(R.id.view_root) View mViewRoot;
     @BindView(R.id.text_id) TextView mIdTextView;
@@ -137,23 +137,7 @@ public class ProcessoDetalheFragment extends CheqFastFragment implements View.On
     @OnClick(R.id.button_aprovar)
     public void onAprovarClick() {
         mFloatingActionMenu.close(true);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
-                .setTitle(R.string.aprovar)
-                .setMessage(R.string.msg_aprovar_processo)
-                .setPositiveButton(R.string.sim, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    aprovar();
-                    }
-                })
-                .setNegativeButton(R.string.nao, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-        AlertDialog dialog = builder.create();
-        dialog.show();
+        aprovar();
     }
 
     @OnClick(R.id.button_cancelar)
@@ -186,7 +170,9 @@ public class ProcessoDetalheFragment extends CheqFastFragment implements View.On
 
     private void aprovar() {
         if (mId != null) {
-            startAsyncAprovar(mId);
+            TransferenciaFragment fragment = TransferenciaFragment.newInstance(mId);
+            fragment.setOnTransferenciaListener(this);
+            FragmentUtils.replace(getActivity(), R.id.content_main, fragment, fragment.getBackStackName());
         }
     }
 
@@ -403,28 +389,6 @@ public class ProcessoDetalheFragment extends CheqFastFragment implements View.On
         });
     }
 
-    private void startAsyncAprovar(Long id) {
-        showProgress();
-        setRootViewVisibility(View.GONE);
-        Observable<DataSet<ProcessoModel, ProcessoRegraModel>> observable = ProcessoService.Async.aprovar(id);
-        prepare(observable).subscribe(new Subscriber<DataSet<ProcessoModel, ProcessoRegraModel>>() {
-            @Override
-            public void onCompleted() {
-                hideProgress();
-            }
-            @Override
-            public void onError(Throwable e) {
-                hideProgress();
-                handle(e);
-            }
-            @Override
-            public void onNext(DataSet<ProcessoModel, ProcessoRegraModel> dataSet) {
-                hideProgress();
-                onAsyncEditarCompleted(dataSet);
-            }
-        });
-    }
-
     private void startAsyncCancelar(Long id) {
         showProgress();
         setRootViewVisibility(View.GONE);
@@ -445,5 +409,10 @@ public class ProcessoDetalheFragment extends CheqFastFragment implements View.On
                 onAsyncEditarCompleted(dataSet);
             }
         });
+    }
+
+    @Override
+    public void onAprovar(DataSet<ProcessoModel, ProcessoRegraModel> dataSet) {
+        onAsyncEditarCompleted(dataSet);
     }
 }

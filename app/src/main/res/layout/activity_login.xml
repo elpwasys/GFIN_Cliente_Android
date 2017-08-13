@@ -27,15 +27,33 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="18dp"
-        android:layout_marginLeft="@dimen/activity_margin"
-        android:layout_marginRight="@dimen/activity_margin"
+        android:layout_marginEnd="@dimen/stantard"
+        android:layout_marginLeft="@dimen/stantard"
+        android:layout_marginRight="@dimen/stantard"
+        android:layout_marginStart="@dimen/stantard"
         android:text="@string/esqueci_senha"
+        android:textAppearance="?android:textAppearanceSmall"
         android:textColor="@color/colorAccent"
         app:layout_constraintBottom_toTopOf="@+id/button_entrar"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:layout_marginStart="@dimen/activity_margin"
-        android:layout_marginEnd="@dimen/activity_margin" />
+        app:layout_constraintRight_toLeftOf="@+id/button_abrir_conta" />
+
+    <Button
+        android:id="@+id/button_abrir_conta"
+        style="?android:attr/buttonBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="@dimen/stantard"
+        android:layout_marginLeft="@dimen/stantard"
+        android:layout_marginRight="@dimen/stantard"
+        android:layout_marginStart="@dimen/stantard"
+        android:text="@string/abrir_conta"
+        android:textAppearance="?android:textAppearanceSmall"
+        android:textColor="@color/colorAccent"
+        app:layout_constraintBottom_toTopOf="@+id/button_entrar"
+        app:layout_constraintLeft_toRightOf="@+id/button_recuperar"
+        app:layout_constraintRight_toRightOf="parent" />
 
     <ImageView
         android:id="@+id/image_logo"

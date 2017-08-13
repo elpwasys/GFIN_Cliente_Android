@@ -54,6 +54,13 @@ public class LoginActivity extends CheqFastActivity {
         }
     }
 
+
+    @OnClick(R.id.button_abrir_conta)
+    public void onAbrirContaClick() {
+        Intent intent = AbraSuaContaActivity.newIntent(this);
+        startActivity(intent);
+    }
+
     private boolean isValid() {
         boolean valid = true;
         // LOGIN

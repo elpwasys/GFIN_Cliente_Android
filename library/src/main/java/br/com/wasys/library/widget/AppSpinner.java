@@ -137,7 +137,7 @@ public class AppSpinner extends AppCompatAutoCompleteTextView implements Adapter
     }
 
     public void setValue(String value) {
-        if (StringUtils.isEmpty(value)) {
+        if (StringUtils.isBlank(value)) {
             return;
         }
         if (CollectionUtils.isNotEmpty(mOptions)) {
@@ -173,6 +173,27 @@ public class AppSpinner extends AppCompatAutoCompleteTextView implements Adapter
     public interface Option {
         String getLabel();
         String getValue();
+    }
+
+    public static class Selectable implements Option {
+
+        private String value;
+        private String label;
+
+        public Selectable(String value, String label) {
+            this.value = value;
+            this.label = label;
+        }
+
+        @Override
+        public String getLabel() {
+            return label;
+        }
+
+        @Override
+        public String getValue() {
+            return value;
+        }
     }
 
     public interface OnOptionClickListener {
